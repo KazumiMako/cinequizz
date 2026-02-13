@@ -1,21 +1,307 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const MOVIES = [
-  { title: "Le Parrain", answer: "le parrain", image: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg" },
-  { title: "Pulp Fiction", answer: "pulp fiction", image: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg" },
-  { title: "Inception", answer: "inception", image: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg" },
-  { title: "Matrix", answer: "matrix", image: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg" },
-  { title: "Star Wars", answer: "star wars", image: "https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_SX300.jpg" },
-  { title: "Gladiateur", answer: "gladiateur", image: "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg" },
-  { title: "Titanic", answer: "titanic", image: "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg" },
-  { title: "Avengers", answer: "avengers", image: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" },
-  { title: "Jurassic Park", answer: "jurassic park", image: "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_SX300.jpg" },
-  { title: "Fight Club", answer: "fight club", image: "https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg" }
+  { 
+    title: "Le Parrain", 
+    answers: ["le parrain", "the godfather", "parrain", "godfather"],
+    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Pulp Fiction", 
+    answers: ["pulp fiction", "pulp", "fiction"],
+    image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Inception", 
+    answers: ["inception"],
+    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Matrix", 
+    answers: ["matrix", "the matrix", "la matrice"],
+    image: "https://images.unsplash.com/photo-1574267432644-f610a91a6fde?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Star Wars", 
+    answers: ["star wars", "la guerre des etoiles", "guerre des etoiles"],
+    image: "https://images.unsplash.com/photo-1579566346927-c68383817a25?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Gladiateur", 
+    answers: ["gladiateur", "gladiator"],
+    image: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Titanic", 
+    answers: ["titanic"],
+    image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Avengers", 
+    answers: ["avengers", "the avengers", "vengeurs"],
+    image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Jurassic Park", 
+    answers: ["jurassic park", "jurasic park", "parc jurassique"],
+    image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Fight Club", 
+    answers: ["fight club", "fightclub"],
+    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Forrest Gump", 
+    answers: ["forrest gump", "forest gump"],
+    image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Le Seigneur des Anneaux", 
+    answers: ["le seigneur des anneaux", "seigneur des anneaux", "lord of the rings", "lotr"],
+    image: "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Interstellar", 
+    answers: ["interstellar", "interstelar"],
+    image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Le Roi Lion", 
+    answers: ["le roi lion", "roi lion", "the lion king", "lion king"],
+    image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Shrek", 
+    answers: ["shrek"],
+    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Harry Potter", 
+    answers: ["harry potter", "potter"],
+    image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Spider-Man", 
+    answers: ["spider-man", "spiderman", "spider man", "l'homme araignee"],
+    image: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Batman", 
+    answers: ["batman", "the dark knight", "dark knight"],
+    image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Joker", 
+    answers: ["joker"],
+    image: "https://images.unsplash.com/photo-1571847140471-1d7766e825ea?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "La La Land", 
+    answers: ["la la land", "lalaland"],
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Toy Story", 
+    answers: ["toy story", "toystory"],
+    image: "https://images.unsplash.com/photo-1587731556938-38755b4803a6?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Le Grand Bleu", 
+    answers: ["le grand bleu", "grand bleu", "the big blue"],
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Amélie Poulain", 
+    answers: ["amelie poulain", "amelie", "le fabuleux destin"],
+    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Intouchables", 
+    answers: ["intouchables", "intouchable"],
+    image: "https://images.unsplash.com/photo-1517164850305-99a3e65bb47e?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Avatar", 
+    answers: ["avatar"],
+    image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Le Silence des Agneaux", 
+    answers: ["le silence des agneaux", "silence des agneaux", "silence of the lambs"],
+    image: "https://images.unsplash.com/photo-1509923786451-e7b413c47d1f?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Retour vers le Futur", 
+    answers: ["retour vers le futur", "back to the future", "retour futur"],
+    image: "https://images.unsplash.com/photo-1533158326339-7f3cf2404354?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "E.T.", 
+    answers: ["et", "e.t.", "e.t", "et l'extra-terrestre"],
+    image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Les Dents de la Mer", 
+    answers: ["les dents de la mer", "dents de la mer", "jaws"],
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Le Cinquième Élément", 
+    answers: ["le cinquieme element", "cinquieme element", "5eme element", "fifth element"],
+    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Taxi", 
+    answers: ["taxi"],
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "La Haine", 
+    answers: ["la haine", "haine"],
+    image: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Les Bronzés", 
+    answers: ["les bronzes", "bronzes"],
+    image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "La Cité de la Peur", 
+    answers: ["la cite de la peur", "cite de la peur"],
+    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop"
+  },
+  { 
+    title: "Bienvenue chez les Ch'tis", 
+    answers: ["bienvenue chez les chtis", "chtis", "ch'tis"],
+    image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop"
+  }
 ];
+,
+  { title: "Scarface", answers: ["scarface", "scar face"], image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800&h=600&fit=crop" },
+  { title: "Goodfellas", answers: ["goodfellas", "good fellas", "les affranchis"], image: "https://images.unsplash.com/photo-1485095329183-d0797cdc5676?w=800&h=600&fit=crop" },
+  { title: "Casino", answers: ["casino"], image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop" },
+  { title: "Interstellar", answers: ["interstellar", "interstella"], image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop" },
+  { title: "Le Seigneur des Anneaux", answers: ["le seigneur des anneaux", "seigneur des anneaux", "lord of the rings", "lotr"], image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&h=600&fit=crop" },
+  { title: "Shawshank Redemption", answers: ["shawshank redemption", "shawshank", "les evades"], image: "https://images.unsplash.com/photo-1516981442399-5e2c8e2f9d33?w=800&h=600&fit=crop" },
+  { title: "Django Unchained", answers: ["django unchained", "django", "jango"], image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=600&fit=crop" },
+  { title: "Le Roi Lion", answers: ["le roi lion", "roi lion", "the lion king", "lion king"], image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=800&h=600&fit=crop" },
+  { title: "Joker", answers: ["joker"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Parasite", answers: ["parasite"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "Taxi Driver", answers: ["taxi driver", "chauffeur de taxi"], image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&h=600&fit=crop" },
+  { title: "Seven", answers: ["seven", "se7en", "7"], image: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800&h=600&fit=crop" },
+  { title: "American Beauty", answers: ["american beauty", "beaute americaine"], image: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&h=600&fit=crop" },
+  { title: "Requiem for a Dream", answers: ["requiem for a dream", "requiem"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Gran Torino", answers: ["gran torino", "grand torino"], image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop" },
+  { title: "Kill Bill", answers: ["kill bill", "killbill"], image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=600&fit=crop" },
+  { title: "Reservoir Dogs", answers: ["reservoir dogs", "chiens de reservoir"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Pirates des Caraïbes", answers: ["pirates des caraibes", "pirates of the caribbean", "pirates"], image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop" },
+  { title: "Harry Potter", answers: ["harry potter", "potter"], image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=800&h=600&fit=crop" },
+  { title: "Spider-Man", answers: ["spider-man", "spiderman", "spider man", "lhomme araignee"], image: "https://images.unsplash.com/photo-1608889335941-32ac5f2041b9?w=800&h=600&fit=crop" },
+  { title: "Batman", answers: ["batman", "bat man"], image: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=800&h=600&fit=crop" },
+  { title: "Iron Man", answers: ["iron man", "ironman"], image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800&h=600&fit=crop" },
+  { title: "Le Monde de Nemo", answers: ["le monde de nemo", "monde de nemo", "finding nemo", "nemo"], image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop" },
+  { title: "Shrek", answers: ["shrek"], image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=800&h=600&fit=crop" },
+  { title: "La Reine des Neiges", answers: ["la reine des neiges", "reine des neiges", "frozen"], image: "https://images.unsplash.com/photo-1483086431886-3590a88317fe?w=800&h=600&fit=crop" },
+  { title: "Alien", answers: ["alien"], image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&h=600&fit=crop" },
+  { title: "Blade Runner", answers: ["blade runner", "bladerunner"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "Terminator", answers: ["terminator"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Predator", answers: ["predator"], image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=600&fit=crop" },
+  { title: "Rocky", answers: ["rocky"], image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&h=600&fit=crop" },
+  { title: "Rambo", answers: ["rambo"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Die Hard", answers: ["die hard", "diehard", "piege de cristal"], image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=600&fit=crop" },
+  { title: "Mad Max", answers: ["mad max", "madmax"], image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop" },
+  { title: "300", answers: ["300", "trois cents"], image: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&h=600&fit=crop" },
+  { title: "Léon", answers: ["leon", "the professional"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "La Grande Vadrouille", answers: ["la grande vadrouille", "grande vadrouille"], image: "https://images.unsplash.com/photo-1533928298208-27ff66555d8d?w=800&h=600&fit=crop" },
+  { title: "OSS 117", answers: ["oss 117", "oss117"], image: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&h=600&fit=crop" },
+  { title: "Psycho", answers: ["psycho", "psychose"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Shining", answers: ["shining", "the shining"], image: "https://images.unsplash.com/photo-1483086431886-3590a88317fe?w=800&h=600&fit=crop" },
+  { title: "L'Exorciste", answers: ["lexorciste", "exorciste", "the exorcist"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Halloween", answers: ["halloween"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Scream", answers: ["scream"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Conjuring", answers: ["conjuring", "the conjuring"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Insidious", answers: ["insidious"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Saw", answers: ["saw"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Get Out", answers: ["get out", "getout"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "A Quiet Place", answers: ["a quiet place", "quiet place", "sans un bruit"], image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=800&h=600&fit=crop" },
+  { title: "Casablanca", answers: ["casablanca"], image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=600&fit=crop" },
+  { title: "Citizen Kane", answers: ["citizen kane", "kane"], image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=600&fit=crop" },
+  { title: "La Vie est Belle", answers: ["la vie est belle", "life is beautiful"], image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop" },
+  { title: "Apocalypse Now", answers: ["apocalypse now", "apocalypse"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Full Metal Jacket", answers: ["full metal jacket", "fullmetaljacket"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Platoon", answers: ["platoon"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Il Faut Sauver le Soldat Ryan", answers: ["il faut sauver le soldat ryan", "saving private ryan", "soldat ryan"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Dunkerque", answers: ["dunkerque", "dunkirk"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "La La Land", answers: ["la la land", "lalaland"], image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop" },
+  { title: "Whiplash", answers: ["whiplash"], image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop" },
+  { title: "The Prestige", answers: ["the prestige", "prestige", "le prestige"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "Memento", answers: ["memento"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "The Truman Show", answers: ["the truman show", "truman show", "truman"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Big Fish", answers: ["big fish", "bigfish"], image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop" },
+  { title: "Her", answers: ["her", "elle"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "Moonlight", answers: ["moonlight"], image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop" },
+  { title: "Le Voyage de Chihiro", answers: ["le voyage de chihiro", "voyage de chihiro", "chihiro", "spirited away"], image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop" },
+  { title: "Mon Voisin Totoro", answers: ["mon voisin totoro", "totoro"], image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop" },
+  { title: "1917", answers: ["1917"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
+  { title: "Oppenheimer", answers: ["oppenheimer"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
+  { title: "Dune", answers: ["dune"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" }
+
+// Function to calculate Levenshtein distance for fuzzy matching
+const levenshteinDistance = (str1, str2) => {
+  const matrix = [];
+  
+  for (let i = 0; i <= str2.length; i++) {
+    matrix[i] = [i];
+  }
+  
+  for (let j = 0; j <= str1.length; j++) {
+    matrix[0][j] = j;
+  }
+  
+  for (let i = 1; i <= str2.length; i++) {
+    for (let j = 1; j <= str1.length; j++) {
+      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  
+  return matrix[str2.length][str1.length];
+};
+
+// Check if answer is close enough (allows 1-2 typos depending on length)
+const isAnswerCorrect = (userAnswer, correctAnswers) => {
+  const normalized = userAnswer.toLowerCase().trim();
+  
+  // Exact match check
+  if (correctAnswers.some(ans => normalized === ans)) {
+    return true;
+  }
+  
+  // Fuzzy match check (allow typos)
+  for (const correctAnswer of correctAnswers) {
+    const distance = levenshteinDistance(normalized, correctAnswer);
+    const threshold = correctAnswer.length <= 5 ? 1 : 2; // Allow 1 typo for short words, 2 for longer
+    
+    if (distance <= threshold) {
+      return true;
+    }
+  }
+  
+  return false;
+};
 
 export default function MovieQuiz() {
   const [screen, setScreen] = useState('welcome'); // welcome, game, leaderboard
   const [pseudo, setPseudo] = useState('');
+  const [shuffledMovies, setShuffledMovies] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [answer, setAnswer] = useState('');
@@ -27,6 +313,16 @@ export default function MovieQuiz() {
   
   const timerRef = useRef(null);
   const blurTimerRef = useRef(null);
+
+  // Shuffle function
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
   // Load leaderboard on mount
   useEffect(() => {
@@ -63,8 +359,13 @@ export default function MovieQuiz() {
 
   const startGame = () => {
     if (pseudo.trim()) {
+      // Select 10 random movies from the full list
+      const randomSelection = shuffleArray(MOVIES).slice(0, 10);
+      setShuffledMovies(randomSelection);
       setScreen('game');
-      startQuestion();
+      setCurrentQuestion(0);
+      setScore(0);
+      setTimeout(() => startQuestion(), 100); // Small delay to ensure shuffledMovies is set
     }
   };
 
@@ -103,13 +404,13 @@ export default function MovieQuiz() {
   const handleTimeout = () => {
     if (hasAnswered) return;
     
-    const currentMovie = MOVIES[currentQuestion];
+    const currentMovie = shuffledMovies[currentQuestion];
     setFeedback(`⏱️ Temps écoulé ! C'était "${currentMovie.title}"`);
     setHasAnswered(true);
 
     // Move to next question or show leaderboard
     setTimeout(() => {
-      if (currentQuestion < MOVIES.length - 1) {
+      if (currentQuestion < shuffledMovies.length - 1) {
         setCurrentQuestion(prev => prev + 1);
         startQuestion();
       } else {
@@ -119,35 +420,40 @@ export default function MovieQuiz() {
   };
 
   const checkAnswer = () => {
-    if (hasAnswered) return;
-
-    clearInterval(timerRef.current);
-    clearInterval(blurTimerRef.current);
-
-    const currentMovie = MOVIES[currentQuestion];
+    const currentMovie = shuffledMovies[currentQuestion];
     const normalizedAnswer = answer.toLowerCase().trim();
-    const normalizedCorrect = currentMovie.answer.toLowerCase();
 
-    if (normalizedAnswer === normalizedCorrect || normalizedAnswer.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedAnswer)) {
-      // Calculate points: max 1000 points at 0 seconds, min 100 points at 10 seconds
+    if (isAnswerCorrect(normalizedAnswer, currentMovie.answers)) {
+      // Correct answer - stop timers and award points
+      clearInterval(timerRef.current);
+      clearInterval(blurTimerRef.current);
+      
       const points = Math.round(Math.max(100, 1000 - (timeElapsed * 90)));
       setScore(prev => prev + points);
       setFeedback(`✅ Correct ! +${points} points (${timeElapsed.toFixed(1)}s)`);
+      setHasAnswered(true);
+
+      // Move to next question after delay
+      setTimeout(() => {
+        if (currentQuestion < shuffledMovies.length - 1) {
+          setCurrentQuestion(prev => prev + 1);
+          startQuestion();
+        } else {
+          finishGame();
+        }
+      }, 2000);
     } else {
-      setFeedback(`❌ Raté ! C'était "${currentMovie.title}"`);
+      // Wrong answer - show feedback but keep playing
+      setFeedback(`❌ Mauvaise réponse ! Réessaye...`);
+      setAnswer(''); // Clear input for next attempt
+      
+      // Clear feedback after 1.5 seconds
+      setTimeout(() => {
+        if (!hasAnswered) {
+          setFeedback('');
+        }
+      }, 1500);
     }
-
-    setHasAnswered(true);
-
-    // Move to next question or show leaderboard
-    setTimeout(() => {
-      if (currentQuestion < MOVIES.length - 1) {
-        setCurrentQuestion(prev => prev + 1);
-        startQuestion();
-      } else {
-        finishGame();
-      }
-    }, 2000);
   };
 
   const finishGame = async () => {
@@ -219,7 +525,7 @@ export default function MovieQuiz() {
 
   // Game Screen
   if (screen === 'game') {
-    const currentMovie = MOVIES[currentQuestion];
+    const currentMovie = shuffledMovies[currentQuestion];
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
