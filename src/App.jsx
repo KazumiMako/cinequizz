@@ -177,9 +177,7 @@ const MOVIES = [
     title: "Bienvenue chez les Ch'tis", 
     answers: ["bienvenue chez les chtis", "chtis", "ch'tis"],
     image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop"
-  }
-];
-,
+  },
   { title: "Scarface", answers: ["scarface", "scar face"], image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800&h=600&fit=crop" },
   { title: "Goodfellas", answers: ["goodfellas", "good fellas", "les affranchis"], image: "https://images.unsplash.com/photo-1485095329183-d0797cdc5676?w=800&h=600&fit=crop" },
   { title: "Casino", answers: ["casino"], image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop" },
