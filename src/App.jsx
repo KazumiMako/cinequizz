@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+const VERSION = "v1.4.0";
+
 const MOVIES = [
   { 
     title: "Le Parrain", 
@@ -298,6 +300,13 @@ const isAnswerCorrect = (userAnswer, correctAnswers) => {
   return false;
 };
 
+// Version Badge Component
+const VersionBadge = () => (
+  <div className="fixed bottom-4 right-4 bg-black/50 backdrop-blur-sm text-white/60 px-3 py-1 rounded-full text-xs font-mono">
+    {VERSION}
+  </div>
+);
+
 export default function MovieQuiz() {
   const [screen, setScreen] = useState('welcome'); // welcome, game, leaderboard
   const [pseudo, setPseudo] = useState('');
@@ -543,6 +552,7 @@ export default function MovieQuiz() {
             </div>
           )}
         </div>
+        <VersionBadge />
       </div>
     );
   }
@@ -618,6 +628,7 @@ export default function MovieQuiz() {
             </div>
           )}
         </div>
+        <VersionBadge />
       </div>
     );
   }
@@ -719,6 +730,7 @@ export default function MovieQuiz() {
           Rejouer
         </button>
       </div>
+      <VersionBadge />
     </div>
   );
 }
