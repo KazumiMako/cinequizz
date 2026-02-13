@@ -310,6 +310,7 @@ export default function MovieQuiz() {
   const [feedback, setFeedback] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
   const [hasAnswered, setHasAnswered] = useState(false);
+  const [sessionHistory, setSessionHistory] = useState([]);
   
   const timerRef = useRef(null);
   const blurTimerRef = useRef(null);
@@ -362,6 +363,7 @@ export default function MovieQuiz() {
       // Select 10 random movies from the full list
       const randomSelection = shuffleArray(MOVIES).slice(0, 10);
       setShuffledMovies(randomSelection);
+      setSessionHistory([]); // Reset session history
       setScreen('game');
       setCurrentQuestion(0);
       setScore(0);
@@ -405,6 +407,17 @@ export default function MovieQuiz() {
     if (hasAnswered) return;
     
     const currentMovie = shuffledMovies[currentQuestion];
+    
+    // Record in session history
+    setSessionHistory(prev => [...prev, {
+      questionNumber: currentQuestion + 1,
+      movie: currentMovie.title,
+      image: currentMovie.image,
+      timeElapsed: 10,
+      points: 0,
+      answered: false
+    }]);
+    
     setFeedback(`⏱️ Temps écoulé ! C'était "${currentMovie.title}"`);
     setHasAnswered(true);
 
@@ -430,6 +443,17 @@ export default function MovieQuiz() {
       
       const points = Math.round(Math.max(100, 1000 - (timeElapsed * 90)));
       setScore(prev => prev + points);
+      
+      // Record in session history
+      setSessionHistory(prev => [...prev, {
+        questionNumber: currentQuestion + 1,
+        movie: currentMovie.title,
+        image: currentMovie.image,
+        timeElapsed: parseFloat(timeElapsed.toFixed(1)),
+        points: points,
+        answered: true
+      }]);
+      
       setFeedback(`✅ Correct ! +${points} points (${timeElapsed.toFixed(1)}s)`);
       setHasAnswered(true);
 
@@ -543,11 +567,11 @@ export default function MovieQuiz() {
           </div>
 
           {/* Image */}
-          <div className="relative mb-6 rounded-2xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
+          <div className="relative mb-6 rounded-2xl overflow-hidden shadow-2xl bg-black/30" style={{ paddingBottom: '56.25%' }}>
             <img
               src={currentMovie.image}
               alt="Film mystère"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain"
               style={{ filter: `blur(${blurLevel}px)` }}
               crossOrigin="anonymous"
             />
@@ -601,46 +625,91 @@ export default function MovieQuiz() {
   // Leaderboard Screen
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
-      <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-white/20">
-        <h1 className="text-4xl font-bold text-white mb-2 text-center">🏆 Classement Final</h1>
+      <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 max-w-4xl w-full shadow-2xl border border-white/20 max-h-[90vh] overflow-y-auto">
+        <h1 className="text-4xl font-bold text-white mb-2 text-center">🏆 Partie Terminée</h1>
         <p className="text-purple-200 text-center mb-8">Ton score : {score} points</p>
 
-        <div className="space-y-3 mb-8">
-          {leaderboard.map((entry, index) => {
-            const isCurrentPlayer = entry.pseudo === pseudo && entry.score === score;
-            return (
-              <div
-                key={index}
-                className={`flex items-center justify-between p-4 rounded-xl ${
-                  isCurrentPlayer 
-                    ? 'bg-yellow-500/30 border-2 border-yellow-400' 
-                    : 'bg-white/10'
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                    index === 0 ? 'bg-yellow-400 text-yellow-900' :
-                    index === 1 ? 'bg-gray-300 text-gray-800' :
-                    index === 2 ? 'bg-orange-400 text-orange-900' :
-                    'bg-white/20 text-white'
-                  }`}>
-                    {index + 1}
-                  </div>
-                  <div>
-                    <div className={`font-bold ${isCurrentPlayer ? 'text-yellow-200' : 'text-white'}`}>
-                      {entry.pseudo} {isCurrentPlayer && '← Toi !'}
-                    </div>
-                    <div className="text-purple-300 text-sm">
-                      {new Date(entry.date).toLocaleDateString('fr-FR')}
-                    </div>
-                  </div>
+        {/* Session Recap */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-4 text-center">📊 Récapitulatif de ta partie</h2>
+          <div className="space-y-3">
+            {sessionHistory.map((item, index) => (
+              <div key={index} className="bg-white/10 rounded-xl p-4 flex items-center gap-4">
+                {/* Movie Image */}
+                <div className="w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-black/30">
+                  <img 
+                    src={item.image} 
+                    alt={item.movie}
+                    className="w-full h-full object-contain"
+                    crossOrigin="anonymous"
+                  />
                 </div>
-                <div className={`text-2xl font-bold ${isCurrentPlayer ? 'text-yellow-200' : 'text-white'}`}>
-                  {entry.score}
+                
+                {/* Question Info */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-purple-300 text-sm">Question {item.questionNumber}</span>
+                    {item.answered ? (
+                      <span className="text-green-400 font-bold">✅ Trouvé !</span>
+                    ) : (
+                      <span className="text-red-400 font-bold">⏱️ Temps écoulé</span>
+                    )}
+                  </div>
+                  <div className="text-white font-bold mb-1">{item.movie}</div>
+                  <div className="flex gap-4 text-sm">
+                    <span className="text-purple-200">
+                      ⏱ {item.answered ? `${item.timeElapsed}s` : '10s'}
+                    </span>
+                    <span className="text-yellow-400 font-bold">
+                      +{item.points} pts
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+
+        {/* Global Leaderboard */}
+        <div className="mb-8 pt-8 border-t border-white/20">
+          <h2 className="text-2xl font-bold text-white mb-4 text-center">🏆 Classement Global</h2>
+          <div className="space-y-3">
+            {leaderboard.map((entry, index) => {
+              const isCurrentPlayer = entry.pseudo === pseudo && entry.score === score;
+              return (
+                <div
+                  key={index}
+                  className={`flex items-center justify-between p-4 rounded-xl ${
+                    isCurrentPlayer 
+                      ? 'bg-yellow-500/30 border-2 border-yellow-400' 
+                      : 'bg-white/10'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                      index === 0 ? 'bg-yellow-400 text-yellow-900' :
+                      index === 1 ? 'bg-gray-300 text-gray-800' :
+                      index === 2 ? 'bg-orange-400 text-orange-900' :
+                      'bg-white/20 text-white'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div className={`font-bold ${isCurrentPlayer ? 'text-yellow-200' : 'text-white'}`}>
+                        {entry.pseudo} {isCurrentPlayer && '← Toi !'}
+                      </div>
+                      <div className="text-purple-300 text-sm">
+                        {new Date(entry.date).toLocaleDateString('fr-FR')}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`text-2xl font-bold ${isCurrentPlayer ? 'text-yellow-200' : 'text-white'}`}>
+                    {entry.score}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <button
