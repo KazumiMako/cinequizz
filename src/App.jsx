@@ -245,7 +245,7 @@ const MOVIES = [
   { title: "Mon Voisin Totoro", answers: ["mon voisin totoro", "totoro"], image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop" },
   { title: "1917", answers: ["1917"], image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" },
   { title: "Oppenheimer", answers: ["oppenheimer"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" },
-  { title: "Dune", answers: ["dune"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" }
+  { title: "Dune", answers: ["dune"], image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" }];
 
 // Function to calculate Levenshtein distance for fuzzy matching
 const levenshteinDistance = (str1, str2) => {
